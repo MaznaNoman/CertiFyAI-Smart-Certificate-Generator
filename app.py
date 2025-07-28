@@ -40,12 +40,12 @@ if template_file:
                 })
 
         # Font load (fallback to default if arial not found)
+        font_path = "DejaVuSerif.ttf"  
         try:
-            font_path = "arial.ttf"
-            ImageFont.truetype(font_path, 20)
+            ImageFont.truetype(font_path, 20)  # Font file check kar raha hai
         except:
             font_path = None
-            st.warning("⚠️ 'arial.ttf' not found. Using default font.")
+            st.warning("⚠️ 'DejaVuSerif.ttf' not found. Using default font.")
 
         def generate_certificate(row):
             cert = template_img.copy()
@@ -53,15 +53,14 @@ if template_file:
             for field in field_settings:
                 text = str(row.get(field["column"], "")).strip()
                 font = ImageFont.truetype(font_path, field["font_size"]) if font_path else ImageFont.load_default()
-                text_width = draw.textbbox((0, 0), text, font=font)[2]
-                draw.text((field["x"] - text_width // 2, field["y"]), text, font=font, fill=field["font_color"])
+                draw.text((field["x"], field["y"]), text, font=font, fill=field["font_color"])
             return cert
 
         # Preview
         st.markdown("## 🔍 Step 4: Preview")
         if st.button("Show Preview (First Entry)"):
             preview_cert = generate_certificate(df.iloc[0])
-            st.image(preview_cert, caption="📄 Certificate Preview", use_column_width=True)
+            st.image(preview_cert, caption="📄 Certificate Preview",width=800)
 
         # Generate ZIP
         st.markdown("## 🚀 Step 5: Generate All Certificates")
