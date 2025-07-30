@@ -12,7 +12,7 @@ st.markdown("## 📄 Step 1: Upload Certificate Template (PNG/JPG)")
 template_file = st.file_uploader("Choose certificate template", type=["png", "jpg", "jpeg"])
 if template_file:
     template_img = Image.open(template_file)
-    st.image(template_img, caption="Template Preview", use_column_width=True)
+    st.image(template_img, caption="Template Preview", use_container_width=True)
 
     # Load Excel or CSV
     st.markdown("## 📊 Step 2: Upload Winner Data (Excel/CSV)")
